@@ -19,13 +19,15 @@ Maven dependency
     <dependency>
       <groupId>com.neatresults.mgnltweaks</groupId>
       <artifactId>neat-scripted-select</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
 ```
 
 Versions
 -----------------
 Version 1.0.x compatible with both currently supported version of Magnolia 5.3.x and 5.4.x
+
+Latest version can be found at https://nexus.magnolia-cms.com/service/local/repositories/magnolia.forge.releases/content/com/neatresults/mgnltweaks/neat-scripted-select/1.0/neat-scripted-select-1.0.jar
 
 Installation & updates 
 -----------------
