@@ -18,8 +18,8 @@
   </properties>
 
   <scm>
-    <connection>scm:git:https://github.com/rah003/neat-scripted-select.git</connection>
-    <developerConnection>scm:git:https://github.com/rah003/neat-scripted-select.git</developerConnection>
+    <connection>scm:git:https://github.com/rah003/scripted-select.git</connection>
+    <developerConnection>scm:git:https://github.com/rah003/scripted-select.git</developerConnection>
     <url></url>
     <tag>HEAD</tag>
   </scm>

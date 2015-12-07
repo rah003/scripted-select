@@ -48,7 +48,7 @@ public class NeatScriptedSelectVersionHandler extends DefaultModuleVersionHandle
     @Override
     protected List<Task> getBasicInstallTasks(InstallContext installContext) {
         List<Task> tasks = new ArrayList<Task>();
-        tasks.add(new CreateNodeTask("", "", "groovy", "/", "scripts", NodeTypes.Folder.NAME));
+        tasks.add(new CreateNodeTask("", "", "scripts", "/", "selectFields", NodeTypes.Folder.NAME));
         tasks.addAll(super.getBasicInstallTasks(installContext));
         return tasks;
     }
