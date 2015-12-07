@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node sv:name="ContactsSelectFields" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>mgnl:content</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>9b74aa4c-1096-4e29-81ba-f52b9425b9b8</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+    <sv:value>false</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:created" sv:type="Date">
+    <sv:value>2015-11-24T09:16:17.439+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:createdBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+    <sv:value>2015-11-24T09:16:17.440+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+    <sv:value>2015-11-24T17:07:34.362+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="script" sv:type="Boolean">
+    <sv:value>true</sv:value>
+  </sv:property>
+  <sv:property sv:name="text" sv:type="String">
+    <sv:value>import java.util.*;
+import info.magnolia.ui.form.field.definition.*;
+import javax.jcr.*;
+import info.magnolia.repository.RepositoryConstants
+import info.magnolia.objectfactory.Components
+import com.neatresults.mgnltweaks.ui.field.ScriptableSelectFieldFactory
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+Logger log = LoggerFactory.getLogger(ScriptableSelectFieldFactory.class)
+
+        List&lt;SelectFieldOptionDefinition&gt; fields = new ArrayList&lt;SelectFieldOptionDefinition&gt;();
+        try {
+            Session session = MgnlContext.getJCRSession("contacts");
+            NodeIterator iter = session.getNode("/").getNodes();
+            while (iter.hasNext()) {
+                Node n = iter.nextNode();
+                if (!n.primaryNodeType.name.equals("mgnl:contact")) {
+                    continue;
+                }
+                SelectFieldOptionDefinition field = new SelectFieldOptionDefinition();
+                // directly defined label
+                String label = n.getProperty("firstName").string + " &lt;b&gt;" + n.getProperty("lastName").string + "&lt;/b&gt;"
+
+                field.setLabel(label);
+                field.setValue(n.getName());
+              //  field.setIconSrc("../../../VAADIN/themes/admincentraltheme/img/logo-magnolia.svg")
+                fields.add(field);
+            }
+        } catch (RepositoryException e) {
+            log.error(e.getMessage(), e);
+            SelectFieldOptionDefinition field = new SelectFieldOptionDefinition();
+            field.setName("It looks like an error has occured. Please contact admin or developers about it: " + e.getMessage());
+            field.setValue(e.getMessage());
+            fields.add(field);
+
+        }
+        return fields;
+</sv:value>
+  </sv:property>
+</sv:node>

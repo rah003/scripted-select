@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node sv:name="AppGroupSelectFields" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>mgnl:content</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>2af8b4c4-06c2-44f5-b67f-bfa62ae8467f</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:created" sv:type="Date">
+    <sv:value>2015-11-24T09:15:42.148+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:createdBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+    <sv:value>2015-11-24T09:16:11.299+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="script" sv:type="Boolean">
+    <sv:value>true</sv:value>
+  </sv:property>
+  <sv:property sv:name="text" sv:type="String">
+    <sv:value>import java.util.*;
+import info.magnolia.ui.form.field.definition.*;
+import javax.jcr.*;
+import info.magnolia.repository.RepositoryConstants
+import info.magnolia.i18nsystem.SimpleTranslator
+import info.magnolia.objectfactory.Components
+
+
+SimpleTranslator i18n = Components.getComponent(SimpleTranslator.class)
+
+        List&lt;SelectFieldOptionDefinition&gt; fields = new ArrayList&lt;SelectFieldOptionDefinition&gt;();
+        try {
+            Session session = MgnlContext.getJCRSession(RepositoryConstants.CONFIG);
+            NodeIterator iter = session.getNode("/modules/ui-admincentral/config/appLauncherLayout/groups").getNodes();
+            while (iter.hasNext()) {
+                Node n = iter.nextNode();
+                SelectFieldOptionDefinition field = new SelectFieldOptionDefinition();
+                // directly defined label
+                String label = i18n.translate("app-launcher." + n.getName() + ".label");
+
+                field.setLabel(label);
+                field.setValue(n.getName());
+                fields.add(field);
+            }
+        } catch (RepositoryException e) {
+            log.error(e.getMessage(), e);
+            SelectFieldOptionDefinition field = new SelectFieldOptionDefinition();
+            field.setName("It looks like an error has occured. Please contact admin or developers about it: " + e.getMessage());
+            field.setValue(e.getMessage());
+            fields.add(field);
+
+        }
+        return fields;
+</sv:value>
+  </sv:property>
+</sv:node>

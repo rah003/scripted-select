@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node sv:name="scriptableSelect" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>mgnl:contentNode</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>91e52963-b917-4a88-ba08-161b3b12e01c</sv:value>
+  </sv:property>
+  <sv:property sv:name="definitionClass" sv:type="String">
+    <sv:value>com.neatresults.mgnltweaks.scriptedselect.ui.field.ScriptableSelectFieldFactory$Definition</sv:value>
+  </sv:property>
+  <sv:property sv:name="factoryClass" sv:type="String">
+    <sv:value>com.neatresults.mgnltweaks.scriptedselect.ui.field.ScriptableSelectFieldFactory</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:created" sv:type="Date">
+    <sv:value>2015-11-24T16:02:19.152+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:createdBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+    <sv:value>2015-11-24T16:02:40.403+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+</sv:node>

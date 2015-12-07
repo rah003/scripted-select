@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node sv:name="queryableContact" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sv:property sv:name="jcr:primaryType" sv:type="Name">
+    <sv:value>mgnl:contentNode</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:uuid" sv:type="String">
+    <sv:value>525e7e79-e7e7-4aff-92f8-ee4128470556</sv:value>
+  </sv:property>
+  <sv:property sv:name="class" sv:type="String">
+    <sv:value>com.neatresults.mgnltweaks.scriptedselect.ui.field.QueryableScriptableSelectFieldFactory$Definition</sv:value>
+  </sv:property>
+  <sv:property sv:name="jcr:createdBy" sv:type="String">
+    <sv:value>admin</sv:value>
+  </sv:property>
+  <sv:property sv:name="label" sv:type="String">
+    <sv:value>Even more scriptable</sv:value>
+  </sv:property>
+  <sv:property sv:name="labelScript" sv:type="String">
+    <sv:value>n.getProperty("firstName").string.capitalize() + " " + n.getProperty("lastName").string.capitalize()</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+    <sv:value>false</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:created" sv:type="Date">
+    <sv:value>2015-11-26T09:44:05.846+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:createdBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+    <sv:value>2015-11-26T09:44:05.849+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+    <sv:value>2015-11-26T11:04:41.462+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="query" sv:type="String">
+    <sv:value>select * from mgnl:contact</sv:value>
+  </sv:property>
+  <sv:property sv:name="queryLanguage" sv:type="String">
+    <sv:value>sql</sv:value>
+  </sv:property>
+  <sv:property sv:name="script" sv:type="String">
+    <sv:value>/selectFields/QueryBasedSelectFields</sv:value>
+  </sv:property>
+  <sv:property sv:name="valueScript" sv:type="String">
+    <sv:value>n.identifier</sv:value>
+  </sv:property>
+  <sv:property sv:name="workspace" sv:type="String">
+    <sv:value>contacts</sv:value>
+  </sv:property>
+</sv:node>

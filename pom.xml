@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>info.magnolia.maven.poms-forge</groupId>
+    <artifactId>magnolia-parent-pom-forge</artifactId>
+    <version>30</version>
+  </parent>
+
+  <groupId>com.neatresults.mgnltweaks</groupId>
+  <artifactId>neat-scripted-select</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>neat-scripted-select Magnolia Module</name>
+
+  <properties>
+    <magnoliaVersion>5.3.1</magnoliaVersion>
+    <javaVersion>1.8</javaVersion>
+  </properties>
+
+  <scm>
+    <connection>scm:git:https://github.com/rah003/neat-scripted-select.git</connection>
+    <developerConnection>scm:git:https://github.com/rah003/neat-scripted-select.git</developerConnection>
+    <url></url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-core</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-module-groovy</artifactId>
+      <version>2.4.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-templating</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia.ui</groupId>
+      <artifactId>magnolia-ui-api</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia.ui</groupId>
+      <artifactId>magnolia-ui-framework</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia.ui</groupId>
+      <artifactId>magnolia-ui-dialog</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>${javaVersion}</source>
+          <target>${javaVersion}</target>
+        </configuration>
+      </plugin>
+      <!-- java 8 support in checkstyle -->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.17</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>6.11.2</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+    </plugins>
+  </build>
+
+</project>
