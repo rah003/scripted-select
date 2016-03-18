@@ -8,7 +8,7 @@
 
   <groupId>com.neatresults.mgnltweaks</groupId>
   <artifactId>neat-scripted-select</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <packaging>jar</packaging>
   <name>neat-scripted-select Magnolia Module</name>
 
@@ -20,8 +20,8 @@
   <scm>
     <connection>scm:git:https://github.com/rah003/scripted-select.git</connection>
     <developerConnection>scm:git:https://github.com/rah003/scripted-select.git</developerConnection>
-    <url></url>
-    <tag>HEAD</tag>
+    <url />
+    <tag>neat-scripted-select-1.0.1</tag>
   </scm>
 
   <dependencies>
