@@ -25,6 +25,17 @@
  */
 package com.neatresults.mgnltweaks.scriptedselect.ui.field;
 
+import info.magnolia.cms.util.ClasspathResourcesUtil;
+import info.magnolia.context.Context;
+import info.magnolia.context.MgnlContext;
+import info.magnolia.i18nsystem.SimpleTranslator;
+import info.magnolia.module.groovy.console.MgnlGroovyConsole;
+import info.magnolia.module.groovy.console.MgnlGroovyConsoleContext;
+import info.magnolia.ui.api.context.UiContext;
+import info.magnolia.ui.form.field.definition.SelectFieldDefinition;
+import info.magnolia.ui.form.field.definition.SelectFieldOptionDefinition;
+import info.magnolia.ui.form.field.factory.SelectFieldFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -44,16 +55,6 @@ import com.neatresults.mgnltweaks.scriptedselect.ui.field.ScriptableSelectFieldF
 import com.vaadin.data.Item;
 
 import groovy.lang.Binding;
-import info.magnolia.cms.util.ClasspathResourcesUtil;
-import info.magnolia.context.Context;
-import info.magnolia.context.MgnlContext;
-import info.magnolia.i18nsystem.SimpleTranslator;
-import info.magnolia.module.groovy.console.MgnlGroovyConsole;
-import info.magnolia.module.groovy.console.MgnlGroovyConsoleContext;
-import info.magnolia.ui.api.context.UiContext;
-import info.magnolia.ui.form.field.definition.SelectFieldDefinition;
-import info.magnolia.ui.form.field.definition.SelectFieldOptionDefinition;
-import info.magnolia.ui.form.field.factory.SelectFieldFactory;
 
 /**
  * Select field retrieving dynamically all values based on provided groovy script.
@@ -106,6 +107,9 @@ public class ScriptableSelectFieldFactory<D extends Definition> extends SelectFi
             Writer writer = new StringWriter();
 
             groovyCtx = new MgnlGroovyConsoleContext(originalCtx);
+            // copied form MgnlGroovyConsoleContext to prevent NPE when retrieving strategy
+            final String STRATEGY_ATTRIBUTE = MgnlGroovyConsole.class.getName() + ".strategy";
+            groovyCtx.setAttribute(STRATEGY_ATTRIBUTE, null, Context.SESSION_SCOPE);
             configureContext(groovyCtx);
 
             MgnlContext.setInstance(groovyCtx);
