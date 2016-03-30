@@ -126,7 +126,9 @@ public class ScriptableSelectFieldFactory<D extends Definition> extends SelectFi
                 }
                 fields = list;
             }
-            fields.stream().forEach(field -> field.setName(definition.getName()));
+            for (SelectFieldOptionDefinition field : fields) {
+                field.setName(definition.getName());
+            }
             return fields;
         } finally {
             // close files
