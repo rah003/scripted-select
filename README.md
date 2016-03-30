@@ -19,7 +19,7 @@ Maven dependency
     <dependency>
       <groupId>com.neatresults.mgnltweaks</groupId>
       <artifactId>neat-scripted-select</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
     </dependency>
 ```
 
@@ -27,7 +27,7 @@ Versions
 -----------------
 Version 1.0.x compatible with both currently supported version of Magnolia 5.3.x and 5.4.x
 
-Latest version can be found at https://nexus.magnolia-cms.com/service/local/repositories/magnolia.forge.releases/content/com/neatresults/mgnltweaks/neat-scripted-select/1.0.1/neat-scripted-select-1.0.1.jar
+Latest version can be found at https://nexus.magnolia-cms.com/service/local/repositories/magnolia.forge.releases/content/com/neatresults/mgnltweaks/neat-scripted-select/1.0.2/neat-scripted-select-1.0.2.jar
 
 Installation & updates 
 -----------------
@@ -35,6 +35,8 @@ Upon instalation, module will register 2 custom select fields and create two fie
 
 Changes
 -----------------
+1.0.2
+- Compatiblity with Java 7 (by popular demand)
 1.0.1
 - Compatibility with Magnolia 5.4.5/magnolia-groovy-2.4.3  (due to MGNLGROOVY-142)
 
