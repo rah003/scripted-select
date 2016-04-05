@@ -6,6 +6,8 @@ A [module](https://documentation.magnolia-cms.com/display/DOCS/Modules) for the 
 Scripted Select adds two custom select fields that allow developers to easily build select fields showing whatever dynamic data necessary without need to recompile everything.
 Second field then allows producing select lists of items directly from any jcr based data within definition using small single line scriptlets without need to write any kind of boiler plate code.
 
+More details and examples of usage can be found at [my blog](https://www.magnolia-cms.com/blogs/jan-haderka/detail~@scriptable-and-queryable-select-fields~.html).
+
 License
 -------
 
