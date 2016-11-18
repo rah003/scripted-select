@@ -25,21 +25,20 @@
  */
 package com.neatresults.mgnltweaks.scriptedselect.ui.field;
 
+import groovy.lang.Binding;
 import info.magnolia.cms.util.ClasspathResourcesUtil;
 import info.magnolia.context.Context;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.module.groovy.console.MgnlGroovyConsole;
 import info.magnolia.module.groovy.console.MgnlGroovyConsoleContext;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.ui.api.context.UiContext;
 import info.magnolia.ui.form.field.definition.SelectFieldDefinition;
 import info.magnolia.ui.form.field.definition.SelectFieldOptionDefinition;
 import info.magnolia.ui.form.field.factory.SelectFieldFactory;
+import info.magnolia.ui.framework.message.MessagesManager;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,17 +46,17 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.jcr.RepositoryException;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.neatresults.mgnltweaks.scriptedselect.ui.field.ScriptableSelectFieldFactory.Definition;
+import ch.esense.mastertemplate.scriptselect.ui.field.ScriptableSelectFieldFactory.Definition;
+
 import com.vaadin.data.Item;
 
-import groovy.lang.Binding;
-
 /**
- * Select field retrieving dynamically all values based on provided groovy script.
+ * Select field retrieving dynamically all values based on provided groovy
+ * script.
  *
  * @param <D>
  */
@@ -78,44 +77,31 @@ public class ScriptableSelectFieldFactory<D extends Definition> extends SelectFi
     public List<SelectFieldOptionDefinition> getSelectFieldOptionDefinition() {
 
         Context originalCtx = MgnlContext.getInstance();
-        InputStream inputStream = null;
         MgnlGroovyConsoleContext groovyCtx = null;
+        String inputText = StringUtils.EMPTY;
         try {
-
 
             String inputFile = definition.getScript();
             // First Check
             URL inFile = ClasspathResourcesUtil.getResource(inputFile);
             if (inFile == null) {
                 try {
-                    inputStream = MgnlContext.getJCRSession("scripts").getNode(inputFile).getProperty("text").getStream();
+                    inputText = MgnlContext.getJCRSession("scripts").getNode(inputFile).getProperty("text").getString();
                 } catch (RepositoryException e) {
                     throw new RuntimeException("Can't find resource file at " + inputFile);
                 }
-            } else {
-                // Get Input Stream
-                try {
-                    inputStream = ClasspathResourcesUtil.getResource(inputFile).openStream();
-                } catch (IOException e) {
-                    throw new RuntimeException("Can't read resource file at " + inputFile);
-                }
             }
-            if (inputStream == null) {
+            if (inputText.isEmpty()) {
                 throw new RuntimeException("Failed while reading resource file at " + inFile.getFile());
             }
 
-            Writer writer = new StringWriter();
-
             groovyCtx = new MgnlGroovyConsoleContext(originalCtx);
-            // copied form MgnlGroovyConsoleContext to prevent NPE when retrieving strategy
-            final String STRATEGY_ATTRIBUTE = MgnlGroovyConsole.class.getName() + ".strategy";
-            groovyCtx.setAttribute(STRATEGY_ATTRIBUTE, null, Context.SESSION_SCOPE);
             configureContext(groovyCtx);
 
             MgnlContext.setInstance(groovyCtx);
-            MgnlGroovyConsole console = new MgnlGroovyConsole(new Binding());
-            Object result = console.evaluate(inputStream, console.generateScriptName(), writer);
-
+            MgnlGroovyConsole console = new MgnlGroovyConsole(new Binding(), Components.getComponent(MessagesManager.class), Components.getComponent(SimpleTranslator.class));
+            Object result = console.evaluate(inputText);
+            
             List<SelectFieldOptionDefinition> fields = null;
             if (result instanceof List) {
                 fields = (List<SelectFieldOptionDefinition>) result;
@@ -126,13 +112,13 @@ public class ScriptableSelectFieldFactory<D extends Definition> extends SelectFi
                 }
                 fields = list;
             }
+
             for (SelectFieldOptionDefinition field : fields) {
                 field.setName(definition.getName());
             }
+
             return fields;
         } finally {
-            // close files
-            IOUtils.closeQuietly(inputStream);
             // restore context
             MgnlContext.setInstance(originalCtx);
         }
