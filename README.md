@@ -47,6 +47,7 @@ Changes
 
 1.0.2
 - Compatiblity with Java 7 (by popular demand)
+
 1.0.1
 - Compatibility with Magnolia 5.4.5/magnolia-groovy-2.4.3  (due to MGNLGROOVY-142)
 
