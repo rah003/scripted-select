@@ -26,6 +26,7 @@
 package com.neatresults.mgnltweaks.scriptedselect.ui.field;
 
 import info.magnolia.cms.util.ClasspathResourcesUtil;
+import info.magnolia.context.AbstractContext;
 import info.magnolia.context.Context;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.i18nsystem.SimpleTranslator;
@@ -38,6 +39,7 @@ import info.magnolia.ui.form.field.factory.SelectFieldFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URL;
@@ -48,6 +50,9 @@ import javax.inject.Inject;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.CharEncoding;
+import org.codehaus.groovy.control.CompilationFailedException;
+import org.codehaus.groovy.runtime.InvokerHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +60,7 @@ import com.neatresults.mgnltweaks.scriptedselect.ui.field.ScriptableSelectFieldF
 import com.vaadin.data.Item;
 
 import groovy.lang.Binding;
+import groovy.lang.Script;
 
 /**
  * Select field retrieving dynamically all values based on provided groovy script.
@@ -107,14 +113,13 @@ public class ScriptableSelectFieldFactory<D extends Definition> extends SelectFi
             Writer writer = new StringWriter();
 
             groovyCtx = new MgnlGroovyConsoleContext(originalCtx);
-            // copied form MgnlGroovyConsoleContext to prevent NPE when retrieving strategy
-            final String STRATEGY_ATTRIBUTE = MgnlGroovyConsole.class.getName() + ".strategy";
-            groovyCtx.setAttribute(STRATEGY_ATTRIBUTE, null, Context.SESSION_SCOPE);
+            groovyCtx.setRepositoryStrategy(((AbstractContext) originalCtx).getRepositoryStrategy());
             configureContext(groovyCtx);
 
-            MgnlContext.setInstance(groovyCtx);
             MgnlGroovyConsole console = new MgnlGroovyConsole(new Binding());
-            Object result = console.evaluate(inputStream, console.generateScriptName(), writer);
+            // set context
+            MgnlContext.setInstance(groovyCtx);
+            Object result = evaluate(inputStream, console.generateScriptName(), writer, console);
 
             List<SelectFieldOptionDefinition> fields = null;
             if (result instanceof List) {
@@ -139,6 +144,29 @@ public class ScriptableSelectFieldFactory<D extends Definition> extends SelectFi
     }
 
     protected void configureContext(MgnlGroovyConsoleContext groovyCtx) {
+    }
+
+    private Object evaluate(InputStream in, String fileName, Writer out, MgnlGroovyConsole console) throws CompilationFailedException {
+
+        Script script = null;
+        try {
+            script = createScript(in, out, console);
+            script.setProperty("ctx", MgnlContext.getInstance());
+            return script.run();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (script != null) {
+                InvokerHelper.removeClass(script.getClass());
+            }
+        }
+    }
+
+    private Script createScript(InputStream in, Writer out, MgnlGroovyConsole console) throws CompilationFailedException, IOException {
+        Script script = console.parse(new InputStreamReader(in, CharEncoding.UTF_8), console.generateScriptName());
+        script.setProperty("out", out);
+        script.setProperty("err", out);
+        return script;
     }
 
     /**
