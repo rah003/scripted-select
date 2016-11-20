@@ -91,6 +91,9 @@ public class ScriptableSelectFieldFactory<D extends Definition> extends SelectFi
 
             String inputFile = definition.getScript();
             // First Check
+            if (inputFile == null) {
+                throw new NullPointerException("\"Script\" property in the dialog field " + definition.getName() + " was not configured. Please check your definition.");
+            }
             URL inFile = ClasspathResourcesUtil.getResource(inputFile);
             if (inFile == null) {
                 try {
